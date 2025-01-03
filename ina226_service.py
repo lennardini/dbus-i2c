@@ -11,7 +11,7 @@ class INA226Service(DCI2CService):
     def __init__(self, conn, i2cBus, i2cAddr, serviceType, maxExpectedCurrent=MAX_EXPECTED_AMPS, shuntResistance=SHUNT_OHMS, invertCurrent=INVERT_CURENT):
         super().__init__(conn, i2cBus, i2cAddr, serviceType, 'INA226', maxExpectedCurrent=maxExpectedCurrent, shuntResistance=shuntResistance, invertCurrent=invertCurrent)
 
-    def _configure_service(self, maxExpectedCurrent, shuntResistance):
+    def _configure_service(self, maxExpectedCurrent, shuntResistance, invertCurrent):
         self.device = INA226(busnum=self.i2cBus, address=self.i2cAddr, max_expected_amps=maxExpectedCurrent, shunt_ohms=shuntResistance, log_level=logging.INFO)
         self.device.configure(avg_mode=INA226.AVG_4BIT, bus_ct=INA226.VCT_2116us_BIT, shunt_ct=INA226.VCT_2116us_BIT)
         self.device.sleep()
