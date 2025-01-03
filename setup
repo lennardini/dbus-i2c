@@ -144,7 +144,7 @@ if [ $scriptAction == 'NONE' ] ; then
 				if [ -z "$response" ]; then
 					break
 				fi
-				createDeviceFileINA226 "$setupOptionsDir/device-ina226-$i" "ina226_service" "INA226DCLoadService" 1 $(($response)) 1000
+				createDeviceFileINA226 "$setupOptionsDir/device-ina226-$i" "ina226_service" "INA226DCLoadService" 1 $(($response)) 1000 0.0075 10
 				i=$((i+1))
 			done
 
@@ -177,7 +177,7 @@ if [ $scriptAction == 'INSTALL' ] ; then
 
 	if [ -f "$setupOptionsDir/device-ina226-1" ]; then
 		extInstall "https://github.com/kplindegaard/smbus2" "smbus2" "master" "smbus2"
-		extInstall "https://github.com/e71828/pi_ina226" "pi_ina226" "main" "/"
+		extInstall "https://github.com/lennardini/pi_ina226" "pi_ina226" "main" "/"
 	fi
 
 	if [ -f "$setupOptionsDir/device-sht3x-1" ]; then
