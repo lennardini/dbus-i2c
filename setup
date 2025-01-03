@@ -30,7 +30,7 @@ createDeviceFileINA219 ()
 
 createDeviceFileINA226 ()
 {
-	echo "{\"module\": \"$2\", \"class\": \"$3\", \"bus\": $4, \"address\": $5, \"updateInterval\": $6, \"shuntResistance\": $7, \"maxExpectedCurrent\": $8}" > "$1"
+	echo "{\"module\": \"$2\", \"class\": \"$3\", \"bus\": $4, \"address\": $5, \"updateInterval\": $6, \"shuntResistance\": 0.1, \"maxExpectedCurrent\": 2}" > "$1"
 }
 
 insertLines ()
@@ -144,7 +144,7 @@ if [ $scriptAction == 'NONE' ] ; then
 				if [ -z "$response" ]; then
 					break
 				fi
-				createDeviceFileINA226 "$setupOptionsDir/device-ina226-$i" "ina226_service" "INA226DCLoadService" 1 $(($response)) 1000 0.1 0.8
+				createDeviceFileINA226 "$setupOptionsDir/device-ina226-$i" "ina226_service" "INA226DCLoadService" 1 $(($response)) 1000
 				i=$((i+1))
 			done
 
