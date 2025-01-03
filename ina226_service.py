@@ -7,7 +7,7 @@ SHUNT_OHMS = 0.1
 MAX_EXPECTED_AMPS = 2
 
 class INA226Service(DCI2CService):
-    def __init__(self, conn, i2cBus, i2cAddr, serviceType, maxExpectedCurrent, shuntResistance):
+    def __init__(self, conn, i2cBus, i2cAddr, serviceType, maxExpectedCurrent=MAX_EXPECTED_AMPS, shuntResistance=SHUNT_OHMS, invertCurrent=False):
         super().__init__(conn, i2cBus, i2cAddr, serviceType, 'INA226', maxExpectedCurrent=maxExpectedCurrent, shuntResistance=shuntResistance)
 
     def _configure_service(self, maxExpectedCurrent, shuntResistance):
