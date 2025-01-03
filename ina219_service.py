@@ -4,10 +4,10 @@ import time
 
 SHUNT_OHMS = 0.1
 MAX_EXPECTED_AMPS = 2
-
+INVERT_CURENT = False
 
 class INA219Service(DCI2CService):
-    def __init__(self, conn, i2cBus, i2cAddr, serviceType, maxExpectedCurrent=MAX_EXPECTED_AMPS, shuntResistance=SHUNT_OHMS, invertCurrent=False):
+    def __init__(self, conn, i2cBus, i2cAddr, serviceType, maxExpectedCurrent=MAX_EXPECTED_AMPS, shuntResistance=SHUNT_OHMS, invertCurrent=INVERT_CURENT):
         super().__init__(conn, i2cBus, i2cAddr, serviceType, 'INA219', maxExpectedCurrent=maxExpectedCurrent, shuntResistance=shuntResistance, invertCurrent=invertCurrent)
 
     def _configure_service(self, maxExpectedCurrent, shuntResistance, invertCurrent):
