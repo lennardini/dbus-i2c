@@ -3,6 +3,8 @@ from ina226 import INA226
 from service_utils import DCI2CService, DCLoadServiceMixin, DCSourceServiceMixin
 import time
 
+SHUNT_OHMS = 0.1
+MAX_EXPECTED_AMPS = 2
 
 class INA226Service(DCI2CService):
     def __init__(self, conn, i2cBus, i2cAddr, serviceType, maxExpectedCurrent, shuntResistance):
