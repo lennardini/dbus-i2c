@@ -30,7 +30,7 @@ createDeviceFileINA219 ()
 
 createDeviceFileINA226 ()
 {
-	echo "{\"module\": \"$2\", \"class\": \"$3\", \"bus\": $4, \"address\": $5, \"updateInterval\": $6, \"shuntResistance\": 0.1, \"maxExpectedCurrent\": 2}" > "$1"
+	echo "{\"module\": \"$2\", \"class\": \"$3\", \"bus\": $4, \"address\": $5, \"updateInterval\": $6, \"shuntResistance\": 0.0075, \"maxExpectedCurrent\": 10}" > "$1"
 }
 
 insertLines ()
