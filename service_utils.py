@@ -43,7 +43,7 @@ def getDeviceAddress(i2cBusNum, i2cAddr):
 
 
 def getDeviceInstance(i2cBusNum, i2cAddr):
-    return BASE_DEVICE_INSTANCE_ID + i2cBusNum *100 + i2cAddr
+    return BASE_DEVICE_INSTANCE_ID + i2cBusNum * 100 + i2cAddr
 
 
 class SimpleI2CService(SettableService):
