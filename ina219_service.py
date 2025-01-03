@@ -19,9 +19,9 @@ class INA219Service(DCI2CService):
 
     def update(self):
         self.device.wake()
-        voltage = round(self._voltage(), 3)
-        current = self.current_direction * round(self.device.current()/1000, 3)
-        power = round(self.device.power()/1000, 3)
+        voltage = round(self._voltage(), 2)
+        current = self.current_direction * round(self.device.current()/1000, 2)
+        power = round(self.device.power()/1000, 2)
         now = time.perf_counter()  # record the time as close to measurement-taking as possible
         self.device.sleep()
         super()._update(voltage, current, power, now)
