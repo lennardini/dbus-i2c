@@ -5,9 +5,9 @@ from settableservice import SettableService
 from collections import namedtuple
 import logging
 
-BASE_DEVICE_INSTANCE_ID = 1024
+BASE_DEVICE_INSTANCE_ID = 1000
 PRODUCT_ID = 0
-FIRMWARE_VERSION = 0
+FIRMWARE_VERSION = VERSION
 HARDWARE_VERSION = 0
 CONNECTED = 1
 
@@ -20,7 +20,7 @@ def toKWh(joules):
 
 
 VOLTAGE_TEXT = lambda path,value: "{:.2f}V".format(value)
-CURRENT_TEXT = lambda path,value: "{:.3f}A".format(value)
+CURRENT_TEXT = lambda path,value: "{:.2f}A".format(value)
 POWER_TEXT = lambda path,value: "{:.2f}W".format(value)
 ENERGY_TEXT = lambda path,value: "{:.6f}kWh".format(value)
 
@@ -28,7 +28,7 @@ ENERGY_TEXT = lambda path,value: "{:.6f}kWh".format(value)
 def _createService(conn, serviceType, i2cBusNum, i2cAddr, file, deviceName):
     service = VeDbusService(getServiceName(serviceType, i2cBusNum, i2cAddr), conn, register=False)
     service.add_mandatory_paths(file, VERSION, 'I2C',
-            getDeviceInstance(i2cBusNum, i2cAddr), PRODUCT_ID, deviceName, FIRMWARE_VERSION, HARDWARE_VERSION, CONNECTED)
+            getDeviceInstance(i2cBusNum, i2cAddr), PRODUCT_ID, deviceName, FIRMWARE_, HARDWARE_, CONNECTED)
     service.add_path("/I2C/Bus", i2cBusNum)
     service.add_path("/I2C/Address", "{:#04x}".format(i2cAddr))
     return service
@@ -43,7 +43,7 @@ def getDeviceAddress(i2cBusNum, i2cAddr):
 
 
 def getDeviceInstance(i2cBusNum, i2cAddr):
-    return BASE_DEVICE_INSTANCE_ID + i2cBusNum * 128 + i2cAddr
+    return BASE_DEVICE_INSTANCE_ID + i2cBusNum *100 + i2cAddr
 
 
 class SimpleI2CService(SettableService):
