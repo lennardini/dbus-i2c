@@ -5,15 +5,17 @@ import time
 
 SHUNT_OHMS = 0.1
 MAX_EXPECTED_AMPS = 2
+INVERT_CURENT = False
 
 class INA226Service(DCI2CService):
-    def __init__(self, conn, i2cBus, i2cAddr, serviceType, maxExpectedCurrent=MAX_EXPECTED_AMPS, shuntResistance=SHUNT_OHMS, invertCurrent=False):
-        super().__init__(conn, i2cBus, i2cAddr, serviceType, 'INA226', maxExpectedCurrent=maxExpectedCurrent, shuntResistance=shuntResistance)
+    def __init__(self, conn, i2cBus, i2cAddr, serviceType, maxExpectedCurrent=MAX_EXPECTED_AMPS, shuntResistance=SHUNT_OHMS, invertCurrent=INVERT_CURENT):
+        super().__init__(conn, i2cBus, i2cAddr, serviceType, 'INA226', maxExpectedCurrent=maxExpectedCurrent, shuntResistance=shuntResistance, invertCurrent=invertCurrent)
 
     def _configure_service(self, maxExpectedCurrent, shuntResistance):
         self.device = INA226(busnum=self.i2cBus, address=self.i2cAddr, max_expected_amps=maxExpectedCurrent, shunt_ohms=shuntResistance, log_level=logging.INFO)
         self.device.configure(avg_mode=INA226.AVG_4BIT, bus_ct=INA226.VCT_2116us_BIT, shunt_ct=INA226.VCT_2116us_BIT)
         self.device.sleep()
+        self.current_direction = -1 if invertCurrent else 1
         super()._configure_service()
 
     def update(self):
@@ -23,9 +25,9 @@ class INA226Service(DCI2CService):
         while self.device.is_conversion_ready() == 0:
             # Sleep 10ms
             time.sleep(0.01)
-        voltage = round(self._voltage(), 3)
-        current = round(self.device.current()/1000, 3)
-        power = round(self.device.power()/1000, 3)
+        voltage = round(self._voltage(), 2)
+        current = self.current_direction * round(self.device.current()/1000, 2)
+        power = round(self.device.power()/1000, 2)
         now = time.perf_counter()  # record the time as close to measurement-taking as possible
         self.device.sleep()
         super()._update(voltage, current, power, now)
