@@ -21,9 +21,9 @@ class INA226Service(DCI2CService):
         while self.device.is_conversion_ready() == 0:
             # Sleep 10ms
             time.sleep(0.01)
-        voltage = round(self._voltage(), 3)
+        voltage = round(self._voltage(), 3)*2
         current = round(self.device.current()/1000, 3)
-        power = round(self.device.power()/1000, 3)
+        power = round(self.device.power()/1000, 3)*2
         now = time.perf_counter()  # record the time as close to measurement-taking as possible
         self.device.sleep()
         super()._update(voltage, current, power, now)
